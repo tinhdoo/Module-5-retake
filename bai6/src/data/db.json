@@ -1,0 +1,72 @@
+{
+  "vehicles": [
+    {
+      "id": 1,
+      "num": 2020,
+      "owner": "Tinh",
+      "date": "13/10/2002",
+      "type": {
+        "id": 1,
+        "name": "Xe tải"
+      }
+    },
+    {
+      "id": 2,
+      "num": 5123,
+      "owner": "Duong",
+      "date": "10/11/2004",
+      "type": {
+        "id": 2,
+        "name": "Xe khách"
+      }
+    },
+    {
+      "id": 3,
+      "num": 1244,
+      "owner": "Van",
+      "date": "22/08/1995",
+      "type": {
+        "id": 3,
+        "name": "Xe máy"
+      }
+    },
+    {
+      "id": 4,
+      "num": 3333,
+      "owner": "3333333",
+      "date": "333333333333",
+      "type": {
+        "id": "2",
+        "name": "Xe khách"
+      }
+    },
+    {
+      "id": 5,
+      "num": 4,
+      "owner": "2",
+      "date": "2025-08-28",
+      "type": {
+        "id": "3",
+        "name": "Xe máy"
+      }
+    }
+  ],
+  "types": [
+    {
+      "id": "1",
+      "name": "Xe tải"
+    },
+    {
+      "id": "2",
+      "name": "Xe khách"
+    },
+    {
+      "id": "3",
+      "name": "Xe máy"
+    },
+    {
+      "id": "4",
+      "name": "Xe con"
+    }
+  ]
+}

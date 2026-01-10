@@ -1,0 +1,11 @@
+{
+  "posts": [
+    { "id": 1, "title": "Học Javascript", "author": "Nam" },
+    { "id": 2, "title": "Tìm hiểu về Async/Await", "author": "Lan" },
+    { "id": 3, "title": "Sử dụng Axios", "author": "Hùng" }
+  ],
+  "comments": [
+    { "id": 1, "body": "Bài viết hay quá!", "postId": 1 },
+    { "id": 2, "body": "Cảm ơn bạn đã chia sẻ", "postId": 2 }
+  ]
+}
