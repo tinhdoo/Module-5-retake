@@ -2,14 +2,12 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 export default function HeadComponent() {
-    const [keyword, setKeyword] = useState(""); // State lưu từ khóa
+    const [keyword, setKeyword] = useState("");
     const navigate = useNavigate();
 
     const handleSearch = (e) => {
-        e.preventDefault(); // Chặn reload trang của form
-        // Điều hướng sang trang danh sách kèm query param
-        // Ví dụ: /facilities?search=abc
-        navigate(`/facilities?search=${encodeURIComponent(keyword)}`);
+        e.preventDefault();
+        navigate(`/facilities?search=${keyword}`);
     };
 
     return (

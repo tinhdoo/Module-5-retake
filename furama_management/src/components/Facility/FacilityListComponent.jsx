@@ -1,20 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom'; // 1. Sửa import đúng
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { deleteFacility, getAllFacilities } from '../../service/facilityList';
 import { Button, Container, Row, Col, Pagination } from 'react-bootstrap';
 import FacilityCard from './FacilityCard';
+import DeleteComponent from "./DeleteComponent.jsx";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import {toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const FacilityListComponent = () => {
     const navigate = useNavigate();
     const [facilities, setFacilities] = useState([]);
-
-    // Lấy keyword từ URL
     const [searchParams] = useSearchParams();
     const searchTerm = searchParams.get("search");
 
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage] = useState(3);
+
+    const [showModal, setShowModal] = useState(false);
+    const [deleteTarget, setDeleteTarget] = useState(null);
 
     useEffect(() => {
         loadData();
@@ -33,7 +37,7 @@ const FacilityListComponent = () => {
 
             setFacilities([...listVilla, ...listHouse, ...listRoom]);
         } catch (error) {
-            console.error(error);
+            console.error("Lỗi tải dữ liệu:", error);
         }
     };
 
@@ -49,18 +53,25 @@ const FacilityListComponent = () => {
     const currentFacilities = filteredFacilities.slice(indexOfFirstItem, indexOfLastItem);
     const totalPages = Math.ceil(filteredFacilities.length / itemsPerPage);
 
+    const handleOpenDeleteModal = (item) => {
+        setDeleteTarget(item);
+        setShowModal(true);
+    };
 
-    const handleDelete = async (type, id) => {
-        if (window.confirm("Bạn có chắc muốn xóa không?")) {
+    const confirmDelete = async () => {
+        if (deleteTarget) {
             try {
-                await deleteFacility(type, id);
+                await deleteFacility(deleteTarget.facilityType, deleteTarget.id);
                 await loadData();
+
                 if (currentFacilities.length === 1 && currentPage > 1) {
                     setCurrentPage(prev => prev - 1);
                 }
-                alert("Xóa thành công");
+
+                setShowModal(false);
+                toast.success("Xoa thanh cong")
             } catch (error) {
-                alert("Xóa thất bại");
+                toast.error("Xoa that bai")
             }
         }
     };
@@ -76,7 +87,7 @@ const FacilityListComponent = () => {
 
             <div className="mb-4 text-end">
                 <Button variant="success" onClick={() => navigate('/facility/create')}>
-                    Thêm mới
+                    + Thêm mới dịch vụ
                 </Button>
             </div>
 
@@ -87,56 +98,47 @@ const FacilityListComponent = () => {
             )}
 
             <Row>
-                {filteredFacilities.length === 0 && (
-                    <div className="text-center text-danger">
-                        {searchTerm ? "Không tìm thấy kết quả phù hợp" : "Chưa có dữ liệu"}
+                {filteredFacilities.length === 0 ? (
+                    <div className="text-center text-danger my-5">
+                        <h4>{searchTerm ? "Không tìm thấy kết quả phù hợp" : "Chưa có dữ liệu dịch vụ"}</h4>
                     </div>
+                ) : (
+                    currentFacilities.map((item) => (
+                        <Col md={4} className="mb-4" key={`${item.facilityType}_${item.id}`}>
+                            <FacilityCard
+                                item={item}
+                                onEdit={() => navigate(`/facility/edit/${item.facilityType}/${item.id}`)}
+                                onDelete={() => handleOpenDeleteModal(item)}
+                            />
+                        </Col>
+                    ))
                 )}
-
-                {currentFacilities.map((item) => (
-                    <Col md={4} className="mb-4" key={`${item.facilityType}_${item.id}`}>
-                        <FacilityCard
-                            item={item}
-                            onEdit={() => navigate(`/facility/edit/${item.facilityType}/${item.id}`)}
-                            onDelete={() => handleDelete(item.facilityType, item.id)}
-                        />
-                    </Col>
-                ))}
             </Row>
 
             {filteredFacilities.length > itemsPerPage && (
                 <div className="d-flex justify-content-center mt-3">
                     <Pagination>
-                        <Pagination.First
-                            onClick={() => handlePageChange(1)}
-                            disabled={currentPage === 1}
-                        />
-                        <Pagination.Prev
-                            onClick={() => handlePageChange(currentPage - 1)}
-                            disabled={currentPage === 1}
-                        />
-
-                        {Array.from({ length: totalPages }, (_, i) => i + 1).map((number) => (
+                        <Pagination.Prev disabled={currentPage === 1} onClick={() => handlePageChange(currentPage - 1)} />
+                        {Array.from({ length: totalPages }, (_, i) => (
                             <Pagination.Item
-                                key={number}
-                                active={number === currentPage}
-                                onClick={() => handlePageChange(number)}
+                                key={i + 1}
+                                active={i + 1 === currentPage}
+                                onClick={() => handlePageChange(i + 1)}
                             >
-                                {number}
+                                {i + 1}
                             </Pagination.Item>
                         ))}
-
-                        <Pagination.Next
-                            onClick={() => handlePageChange(currentPage + 1)}
-                            disabled={currentPage === totalPages}
-                        />
-                        <Pagination.Last
-                            onClick={() => handlePageChange(totalPages)}
-                            disabled={currentPage === totalPages}
-                        />
+                        <Pagination.Next disabled={currentPage === totalPages} onClick={() => handlePageChange(currentPage + 1)} />
                     </Pagination>
                 </div>
             )}
+
+            <DeleteComponent
+                show={showModal}
+                handleClose={() => setShowModal(false)}
+                handleConfirm={confirmDelete}
+                targetName={deleteTarget?.name}
+            />
         </Container>
     );
 };

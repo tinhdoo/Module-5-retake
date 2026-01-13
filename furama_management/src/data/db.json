@@ -14,17 +14,17 @@
       "image": "https://images.unsplash.com/photo-1571896349842-33c89424de2d"
     },
     {
-      "id": "2",
-      "name": "Biệt thự 2",
-      "area": 60,
-      "price": 1600000,
-      "maxOfPeople": 6,
+      "id": "6a03",
+      "name": "Villa 3",
+      "area": 50,
+      "price": 1000000,
+      "maxOfPeople": 4,
       "type": "day",
+      "image": "https://iguov8nhvyobj.vcdn.cloud/media/catalog/product/cache/1/small_image/600x314/a134659ca47b28f7b266e1777fbf870f/6/4/640x396-muado_1.jpg",
       "standard": "VIP",
-      "describe": "có ghế ngồi",
+      "description": "ok",
       "pool": 100,
-      "floors": 2,
-      "image": "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1175&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      "floors": 5
     }
   ],
   "house": [
@@ -39,32 +39,9 @@
       "describe": "có xích đu",
       "floors": 3,
       "image": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c"
-    },
-    {
-      "id": "2",
-      "name": "Nhà 2",
-      "area": 80,
-      "price": 2000000,
-      "maxOfPeople": 5,
-      "type": "day",
-      "standard": "normal",
-      "describe": "có xích đu",
-      "floors": 3,
-      "image": "https://images.unsplash.com/photo-1568605114967-8130f3a36994?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
     }
   ],
-  "room": [
-    {
-      "id": "1",
-      "name": "Phòng 1",
-      "area": 50,
-      "price": 1000000,
-      "maxOfPeople": 5,
-      "type": "day",
-      "free-service": "massage",
-      "image": "https://images.unsplash.com/photo-1611892440504-42a792e24d32"
-    }
-  ],
+  "room": [],
   "accompaniedService": [
     {
       "id": "1",
